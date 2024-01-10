@@ -37,3 +37,23 @@ a = 7;
 a = a + 2;
 
 console.log(a); // a = 9
+
+function getAverage(array, num) {
+	var number = 0;
+	var average = 0;
+
+	if (Array.isArray(array)) {
+		for (var i = 0; i < array.length; i++) {
+			number += array[i];
+		}
+		average = number / array.length;
+	} else {
+		average = (number + num) / 2;
+	}
+
+	return average;
+}
+
+var array = [12, 14, 23, 53, 43, 1, 4, 6, 7];
+var results = getAverage(array);
+console.log(results);
