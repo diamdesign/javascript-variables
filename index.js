@@ -183,3 +183,28 @@ function summary(array) {
 const sum = summary(someArray);
 console.log(sum);
 */
+
+var person = {
+	name: "Fredrik Berglund",
+	age: 42,
+	city: "Mariestad",
+	skills: [
+		"Pokemon Master",
+		"Kung Fu Ledgend",
+		"Fotboll Ninja",
+		"Super Kock",
+		"Kung HTML kodare",
+	],
+};
+
+function showSkills(person) {
+	let skills = "";
+	for (let i = 0; i < person.skills.length; i++) {
+		console.log(person.skills[i]);
+		skills += person.skills[i] + ", ";
+	}
+	return skills;
+}
+
+let sum = showSkills(person);
+console.log(sum);
