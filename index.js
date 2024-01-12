@@ -208,3 +208,168 @@ function showSkills(person) {
 
 let sum = showSkills(person);
 console.log(sum);
+
+// Öva på med Objekt
+/*
+const person = {
+  name: "John Doe",
+  age: 25,
+  city: "New York",
+};
+
+console.log("Person's name:", person.name);
+console.log("Person's age:", person.age);
+console.log("Person's city:", person.city);
+
+person.age = 26;
+person.email = "john.doe@example.com";
+
+const car = {
+  make: "Toyota",
+  model: "Camry",
+  displayDetails: function () {
+    console.log(`Car: ${this.make} ${this.model}`);
+  },
+};
+
+for (let property in person) {
+  console.log(`Property: ${property}, Value: ${person[property]}`);
+}
+
+const student = {
+  name: "Alice",
+  grades: {
+    math: 90,
+    science: 85,
+    history: 95,
+  },
+};
+
+student.grades.science = 88;
+
+const books = [
+  { title: "The Great Gatsby", author: "F. Scott Fitzgerald" },
+  { title: "To Kill a Mockingbird", author: "Harper Lee" },
+  { title: "1984", author: "George Orwell" },
+];
+
+for (let book of books) {
+  console.log(`Book Title: ${book.title}, Author: ${book.author}`);
+}
+*/
+
+// Arrays och loops
+/*
+let array1 = [];
+array1.push("apple", 42, true, { key: "value" });
+console.log("Task 1:", array1);
+
+let array2 = [2, 5, 8, 11];
+for (let i = 0; i < array2.length; i++) {
+  array2[i] *= 3;
+}
+console.log("Task 2:", array2);
+
+let array3 = [3, 8, 1, 6, 10, 2];
+let newArray3 = [];
+for (let i = 0; i < array3.length; i++) {
+  if (array3[i] > 5) {
+    newArray3.push(array3[i]);
+  }
+}
+console.log("Task 3:", newArray3);
+
+let array4 = [7, 14, 22, 30, 45];
+let sum = 0;
+for (let i = 0; i < array4.length; i++) {
+  sum += array4[i];
+}
+console.log("Task 4:", sum);
+
+let array5 = ["apple", "banana", "orange", "grape"];
+let searchElement = "orange";
+for (let i = 0; i < array5.length; i++) {
+  if (array5[i] === searchElement) {
+    console.log("Task 5:", searchElement, "found at index", i);
+    break; // Stop the loop once the element is found
+  }
+}
+
+let array6 = [3, 7, 11, 15, 19];
+array6.length--; // Remove the last element
+console.log("Task 6:", array6);
+
+let array7 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+let maxNumber = array7[0];
+for (let i = 1; i < array7.length; i++) {
+  if (array7[i] > maxNumber) {
+    maxNumber = array7[i];
+  }
+}
+console.log("Task 7:", "The biggest number is", maxNumber);
+
+let array8 = ["dog", "cat", "bird"];
+let newArray8 = [];
+for (let i = 0; i < array8.length; i++) {
+  newArray8.push(array8[i]);
+}
+console.log("Task 8:", newArray8);
+
+let array9 = [1, 2, 3, 4, 5];
+for (let i = array9.length - 1; i >= 0; i--) {
+  array9.splice(i, 1);
+}
+console.log("Task 9:", array9);
+*/
+
+// Arrays
+/*
+const numbers = [2, 6, 12, 7, 22, 35];
+
+const firstElement = numbers[0];
+console.log("Task 1:", firstElement);
+
+const lastElement = numbers[numbers.length - 1];
+console.log("Task 2:", lastElement);
+
+const fourthElement = numbers[3];
+console.log("Task 3:", fourthElement);
+
+const secondElement = numbers[1];
+const fifthElement = numbers[4];
+const newArray = [secondElement, fifthElement];
+console.log("Task 4:", newArray);
+
+const arrayLength = numbers.length;
+console.log("Task 5:", arrayLength);
+
+const addedNumberEnd = numbers.push(42);
+console.log(
+	"Task 6:",
+	addedNumberEnd,
+	"This number represents the new length of the array."
+);
+
+const addedNumberStart = numbers.unshift(99);
+console.log(
+	"Task 7:",
+	addedNumberStart,
+	"This number represents the new length of the array."
+);
+
+const removedNumberEnd = numbers.pop();
+console.log(
+	"Task 8:",
+	removedNumberEnd,
+	"This number represents the removed element from the end."
+);
+
+const removedNumberStart = numbers.shift();
+console.log(
+	"Task 9:",
+	removedNumberStart,
+	"This number represents the removed element from the start."
+);
+
+console.log("Task 10:", numbers);
+*/
