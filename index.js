@@ -184,6 +184,7 @@ const sum = summary(someArray);
 console.log(sum);
 */
 
+/*
 var person = {
 	name: "Fredrik Berglund",
 	age: 42,
@@ -208,6 +209,7 @@ function showSkills(person) {
 
 let sum = showSkills(person);
 console.log(sum);
+*/
 
 // Öva på med Objekt
 /*
