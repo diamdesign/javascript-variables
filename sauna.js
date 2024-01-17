@@ -28,19 +28,13 @@ while (tempCelcius < min || tempCelcius > max) {
 	if (tempCelcius < min) {
 		tempIn = parseInt(
 			prompt(
-				tempCelcius +
-					"c (" +
-					tempIn +
-					"f). It's too cold, enter new temperature."
+				`${tempCelcius}c (${tempIn}f). It's too cold, enter new temperature.`
 			)
 		);
 	} else if (tempCelcius > max) {
 		tempIn = parseInt(
 			prompt(
-				tempCelcius +
-					"c (" +
-					tempIn +
-					"f). It's too hot, enter new temperature."
+				`${tempCelcius}c (${tempIn}f). It's too hot, enter new temperature.`
 			)
 		);
 	}
@@ -50,18 +44,10 @@ console.log(tempIn, tempCelcius);
 
 if (tempCelcius === optimal) {
 	alert(
-		"You have selected optimal temperature. " +
-			tempCelcius +
-			"c (" +
-			tempIn +
-			"f)."
+		`You have selected optimal temperature. ${tempCelcius}c (${tempIn}f).`
 	);
 } else if (tempCelcius >= min && tempCelcius <= max) {
 	alert(
-		"You have selected a suitable temperature. " +
-			tempCelcius +
-			"c (" +
-			tempIn +
-			"f)."
+		`You have selected a suitable temperature. ${tempCelcius}c (${tempIn}f).`
 	);
 }
