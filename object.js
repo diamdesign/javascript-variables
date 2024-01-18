@@ -12,3 +12,7 @@ const carModel = car.model;
 const carModel2 = car["model"];
 
 console.log(carModel, carModel2);
+
+Object.freeze(car.model);
+
+Object.seal(car);
