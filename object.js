@@ -22,9 +22,9 @@ Object.seal(car);
 
 let school = {
 	name: "Lexicon",
-	adress: "",
-	zipcode: "",
-	city: "",
+	adress: "Gökarvägen 88",
+	zipcode: "11851",
+	city: "Stockholm",
 	students: [],
 	teachers: [],
 	addStudent: addStudent,
@@ -158,9 +158,9 @@ function addSubject(subjectName) {
 	if (this.subjects) {
 		if (!this.subjects.includes(subjectName)) {
 			this.subjects.push(subjectName);
-			console.log(`Subject '${subjectName}' added.`);
+			console.log(`Subject '${subjectName}' added to ${this.name}.`);
 		} else {
-			console.log(`Subject '${subjectName}' already exists.`);
+			console.log(`Subject '${subjectName}' already exists in ${this.name}.`);
 		}
 	} else {
 		console.log("Student object does not have a 'subjects' property.");
@@ -172,9 +172,9 @@ function removeSubject(subjectName) {
 		const index = this.subjects.indexOf(subjectName);
 		if (index !== -1) {
 			this.subjects.splice(index, 1);
-			console.log(`Subject '${subjectName}' removed.`);
+			console.log(`Subject '${subjectName}' removed from ${this.name}.`);
 		} else {
-			console.log(`Subject '${subjectName}' does not exist.`);
+			console.log(`Subject '${subjectName}' does not exist in ${this.name}.`);
 		}
 	} else {
 		console.log("Subject object does not have a 'subjects' property.");
@@ -186,9 +186,9 @@ function removeStudent(studentName) {
 		const index = this.students.indexOf(studentName);
 		if (index !== -1) {
 			this.students.splice(index, 1);
-			console.log(`Student '${studentName}' removed.`);
+			console.log(`Student '${studentName}' removed from ${this.name}.`);
 		} else {
-			console.log(`Student '${studentName}' does not exist.`);
+			console.log(`Student '${studentName}' does not exist in ${this.name}.`);
 		}
 	} else {
 		console.log("Student object does not have a 'students' property.");
@@ -200,9 +200,9 @@ function removeTeacher(teacherName) {
 		const index = this.teachers.indexOf(teacherName);
 		if (index !== -1) {
 			this.teachers.splice(index, 1);
-			console.log(`Teacher '${teacherName}' removed.`);
+			console.log(`Teacher '${teacherName}' removed from ${this.name}.`);
 		} else {
-			console.log(`Teacher '${teacherName}' does not exist.`);
+			console.log(`Teacher '${teacherName}' does not exist in ${this.name}.`);
 		}
 	} else {
 		console.log("Teacher object does not have a 'teachers' property.");
@@ -213,9 +213,9 @@ function addStudent(studentName) {
 	if (this.students) {
 		if (!this.students.includes(studentName)) {
 			this.students.push(studentName);
-			console.log(`Student '${studentName}' added.`);
+			console.log(`Student '${studentName}' added to ${this.name}.`);
 		} else {
-			console.log(`Student '${studentName}' already exists.`);
+			console.log(`Student '${studentName}' already exists in ${this.name}.`);
 		}
 	} else {
 		console.log("Object does not have a 'students' property.");
@@ -230,9 +230,9 @@ function addTeacher(teacherName) {
 
 		if (!existingTeacher) {
 			this.teachers.push({ name: teacherName });
-			console.log(`Teacher '${teacherName}' added.`);
+			console.log(`Teacher '${teacherName}' added to ${this.name}.`);
 		} else {
-			console.log(`Teacher '${teacherName}' already exists.`);
+			console.log(`Teacher '${teacherName}' already exists in ${this.name}.`);
 		}
 	} else {
 		console.log(`Teacher '${teacherName}' not found.`);
@@ -253,15 +253,15 @@ function addClassToClasses(className) {
 		};
 
 		classes.push(newClass);
-		console.log(`Class ${className} added.`);
+		console.log(`Class '${className}' added to Classes.`);
 	} else {
-		console.log(`Class ${className} already exists.`);
+		console.log(`Class '${className}' already exists.`);
 	}
 }
 
 function addStudentToStudents(studentName) {
 	// Check if the student with the given name already exists
-	if (!studentList.find((s) => s.name === studentName)) {
+	if (!studentlist.find((s) => s.name === studentName)) {
 		let newStudent = {
 			name: studentName,
 			age: "",
@@ -271,10 +271,10 @@ function addStudentToStudents(studentName) {
 			removeSubject: removeSubject,
 		};
 
-		studentList.push(newStudent);
-		console.log(`Student ${studentName} added.`);
+		studentlist.push(newStudent);
+		console.log(`Student '${studentName}' added to Students.`);
 	} else {
-		console.log(`Student ${studentName} already exists.`);
+		console.log(`Student '${studentName}' already exists.`);
 	}
 }
 
@@ -291,9 +291,34 @@ function addTeacherToTeachers(teacherName) {
 		};
 
 		teachers.push(newTeacher);
-		console.log(`Teacher ${teacherName} added.`);
+		console.log(`Teacher '${teacherName}' added to Teachers.`);
 	} else {
-		console.log(`Teacher ${teacherName} already exists.`);
+		console.log(`Teacher '${teacherName}' already exists.`);
+	}
+}
+
+function fireTeacher(teacherName) {
+	// Check if the school object is defined and has the removeTeacher method
+	if (school && school.removeTeacher) {
+		school.removeTeacher(teacherName);
+	} else {
+		console.log("School object or removeTeacher method not properly defined.");
+	}
+
+	// Check if the classes array is defined and has elements
+	if (Array.isArray(classes) && classes.length > 0) {
+		for (let i = 0; i < classes.length; i++) {
+			// Check if the class object has the removeTeacher method
+			if (classes[i] && classes[i].removeTeacher) {
+				classes[i].removeTeacher(teacherName);
+			} else {
+				console.log(
+					`Class ${classes[i].name} object or removeTeacher method not properly defined.`
+				);
+			}
+		}
+	} else {
+		console.log("Classes array not properly defined.");
 	}
 }
 
@@ -304,11 +329,39 @@ addSubjectToTeacher("Math", "Niklas"); // This will print a message that the sub
 let teacherNiklas = teachers[0];
 let teachersofia = teachers[1];
 
+let studentNiklas = studentlist[0];
+let studentJohan = studentlist[1];
+let studentFredrik = studentlist[2];
+
 let classMath = classes[0];
 let classArt = classes[1];
 let classFrontend = classes[2];
 
 teacherNiklas.addSubject("Frontend");
+classFrontend.addTeacher("Niklas");
+classFrontend.addTeacher("Sofia");
+classFrontend.addStudent("Johan");
+classFrontend.addStudent("Vincent");
+addTeacherToTeachers("Johan");
+addStudentToStudents("Lars");
+addClassToClasses("Gymnastics");
+classMath.addTeacher("Johan");
+classMath.addStudent("Fredrik");
+classMath.addStudent("Johan");
+studentFredrik.addSubject("Frontend");
+studentFredrik.addSubject("Math");
+studentJohan.addSubject("Frontend");
 
+for (let i = 0; i < studentlist.length; i++) {
+	let name = studentlist[i].name;
+	school.addStudent(name);
+}
+
+for (let i = 0; i < teachers.length; i++) {
+	let name = teachers[i].name;
+	school.addTeacher(name);
+}
+
+console.log(school);
 console.log(teachers);
 console.log(classes);
