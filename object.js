@@ -169,7 +169,7 @@ function addSubject(subjectName) {
 
 function removeSubject(subjectName) {
 	if (this.subjects) {
-		const index = this.subjects.indexOf(subjectName);
+		const index = this.subjects.findIndex((subject) => subject.name === subjectName);
 		if (index !== -1) {
 			this.subjects.splice(index, 1);
 			console.log(`Subject '${subjectName}' removed from ${this.name}.`);
@@ -183,7 +183,7 @@ function removeSubject(subjectName) {
 
 function removeStudent(studentName) {
 	if (this.students) {
-		const index = this.students.indexOf(studentName);
+		const index = this.students.findIndex((student) => student.name === studentName);
 		if (index !== -1) {
 			this.students.splice(index, 1);
 			console.log(`Student '${studentName}' removed from ${this.name}.`);
@@ -197,7 +197,7 @@ function removeStudent(studentName) {
 
 function removeTeacher(teacherName) {
 	if (this.teachers) {
-		const index = this.teachers.indexOf(teacherName);
+		const index = this.teachers.findIndex((teacher) => teacher.name === teacherName);
 		if (index !== -1) {
 			this.teachers.splice(index, 1);
 			console.log(`Teacher '${teacherName}' removed from ${this.name}.`);
@@ -240,7 +240,6 @@ function addTeacher(teacherName) {
 }
 
 function addClassToClasses(className) {
-	// Check if the class with the given name already exists
 	if (!classes.find((c) => c.name === className)) {
 		let newClass = {
 			name: className,
@@ -260,7 +259,6 @@ function addClassToClasses(className) {
 }
 
 function addStudentToStudents(studentName) {
-	// Check if the student with the given name already exists
 	if (!studentlist.find((s) => s.name === studentName)) {
 		let newStudent = {
 			name: studentName,
@@ -279,7 +277,6 @@ function addStudentToStudents(studentName) {
 }
 
 function addTeacherToTeachers(teacherName) {
-	// Check if the teacher with the given name already exists
 	if (!teachers.find((t) => t.name === teacherName)) {
 		let newTeacher = {
 			name: teacherName,
@@ -298,33 +295,23 @@ function addTeacherToTeachers(teacherName) {
 }
 
 function fireTeacher(teacherName) {
-	// Check if the school object is defined and has the removeTeacher method
-	if (school && school.removeTeacher) {
-		school.removeTeacher(teacherName);
-	} else {
-		console.log("School object or removeTeacher method not properly defined.");
+	for (let i = 0; i < classes.length; i++) {
+		classes[i].removeTeacher(teacherName);
 	}
+	let teacher = teachers.findIndex((teacher) => teacher.name === teacherName);
 
-	// Check if the classes array is defined and has elements
-	if (Array.isArray(classes) && classes.length > 0) {
-		for (let i = 0; i < classes.length; i++) {
-			// Check if the class object has the removeTeacher method
-			if (classes[i] && classes[i].removeTeacher) {
-				classes[i].removeTeacher(teacherName);
-			} else {
-				console.log(
-					`Class ${classes[i].name} object or removeTeacher method not properly defined.`
-				);
-			}
-		}
+	if (teacher !== -1) {
+		teachers.splice(teacher, 1);
+		console.log(`Teacher '${teacherName}' is removed from Teachers.`);
 	} else {
-		console.log("Classes array not properly defined.");
+		console.log(`Teacher '${teacherName}' was not found in Teachers.`);
 	}
+	school.removeTeacher(teacherName);
+	console.log(`Teacher '${teacherName}' is fired and removed from the school.`);
 }
 
-// Example usage of the function
 addSubjectToTeacher("Math", "Niklas");
-addSubjectToTeacher("Math", "Niklas"); // This will print a message that the subject already exists
+addSubjectToTeacher("Math", "Niklas");
 
 let teacherNiklas = teachers[0];
 let teachersofia = teachers[1];
