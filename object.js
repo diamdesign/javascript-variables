@@ -349,6 +349,11 @@ for (let i = 0; i < teachers.length; i++) {
 	school.addTeacher(name);
 }
 
+fireTeacher("Niklas");
+addTeacherToTeachers("Niklas");
+school.addTeacher("Niklas");
+classFrontend.addTeacher("Niklas");
+
 console.log(school);
 console.log(teachers);
 console.log(classes);
