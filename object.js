@@ -69,6 +69,7 @@ let studentlist = [
 		age: "",
 		gender: "Male",
 		subjects: [],
+		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
 	},
@@ -77,6 +78,7 @@ let studentlist = [
 		age: "",
 		gender: "Male",
 		subjects: [],
+		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
 	},
@@ -85,6 +87,7 @@ let studentlist = [
 		age: "",
 		gender: "Male",
 		subjects: [],
+		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
 	},
@@ -93,6 +96,7 @@ let studentlist = [
 		age: "",
 		gender: "Male",
 		subjects: [],
+		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
 	},
@@ -101,6 +105,7 @@ let studentlist = [
 		age: "",
 		gender: "Male",
 		subjects: [],
+		grades: [],
 		addSubject: addSubject,
 	},
 ];
@@ -120,9 +125,23 @@ let teachers = [
 	},
 ];
 
+let grades = [
+	{
+		name: "Fredrik",
+		grades: [
+			{
+				class: "Math",
+				grade: "A",
+			},
+		],
+	},
+];
+
+// studentFredrik.addGrade("Math","A");
+/*
 teachers[0].subjects.push(classes[0].name);
 classes[2].students.push(studentlist[2].name);
-
+*/
 console.log(teachers);
 console.log(classes);
 
@@ -135,7 +154,7 @@ function getTeacherByName(teacherName) {
 }
 
 function getStudentByName(studentName) {
-	return students.find((s) => s.name === studentName);
+	return studentlist.find((s) => s.name === studentName);
 }
 
 function addSubjectToTeacher(subjectName, teacherName) {
@@ -183,7 +202,7 @@ function removeSubject(subjectName) {
 
 function removeStudent(studentName) {
 	if (this.students) {
-		const index = this.students.findIndex((student) => student === studentName);
+		const index = this.students.findIndex((student) => student.name === studentName);
 		if (index !== -1) {
 			this.students.splice(index, 1);
 			console.log(`Student '${studentName}' removed from ${this.name}.`);
@@ -208,20 +227,21 @@ function removeTeacher(teacherName) {
 		console.log("Teacher object does not have a 'teachers' property.");
 	}
 }
-
 function addStudent(studentName) {
 	if (this.students) {
-		if (!this.students.includes(studentName)) {
-			this.students.push(studentName);
+		const existingStudent = getStudentByName(studentName);
+
+		if (existingStudent) {
+			// Student already exists, copy the existing student object and insert it into the students array
+			this.students.push({ ...existingStudent });
 			console.log(`Student '${studentName}' added to ${this.name}.`);
 		} else {
-			console.log(`Student '${studentName}' already exists in ${this.name}.`);
+			console.log(`Student '${studentName}' not found in ${this.name}.`);
 		}
 	} else {
 		console.log("Object does not have a 'students' property.");
 	}
 }
-
 function addTeacher(teacherName) {
 	const teacherObject = getTeacherByName(teacherName);
 
@@ -229,7 +249,7 @@ function addTeacher(teacherName) {
 		const existingTeacher = this.teachers.find((t) => t.name === teacherName);
 
 		if (!existingTeacher) {
-			this.teachers.push({ name: teacherName });
+			this.teachers.push({ ...teacherObject });
 			console.log(`Teacher '${teacherName}' added to ${this.name}.`);
 		} else {
 			console.log(`Teacher '${teacherName}' already exists in ${this.name}.`);
@@ -265,6 +285,7 @@ function addStudentToStudents(studentName) {
 			age: "",
 			gender: "Male",
 			subjects: [],
+			grades: [],
 			addSubject: addSubject,
 			removeSubject: removeSubject,
 		};
@@ -326,11 +347,54 @@ function relegateStudent(studentName) {
 	console.log(`Student '${studentName}' is relegated and removed from the school.`);
 }
 
-addSubjectToTeacher("Math", "Niklas");
-addSubjectToTeacher("Math", "Niklas");
+function displayAllStudents() {
+	studentlist.forEach((student) => {
+		console.log(`Student: ${student.name}`);
+		Object.entries(student).forEach(([key, value]) => {
+			if (typeof value !== "function") {
+				console.log(`${key}: ${value}`);
+			}
+		});
+		console.log("----------------------");
+	});
+}
+
+function displayAllTeachers() {
+	teachers.forEach((teacher) => {
+		console.log(`Teacher: ${teacher.name}`);
+		Object.entries(teacher).forEach(([key, value]) => {
+			if (typeof value !== "function") {
+				console.log(`${key}: ${value}`);
+			}
+		});
+		console.log("----------------------");
+	});
+}
+
+function displayClass(className) {
+	const classObj = classes.find((classObj) => classObj.name === className);
+
+	if (classObj) {
+		console.log(`Class: ${classObj.name}`);
+
+		console.log("Students:");
+		classObj.students.forEach((student) => {
+			console.log(`  ${student.name}`);
+		});
+
+		console.log("Teachers:");
+		classObj.teachers.forEach((teacher) => {
+			console.log(`  ${teacher.name}`);
+		});
+
+		console.log("----------------------");
+	} else {
+		console.log(`Class '${className}' not found.`);
+	}
+}
 
 let teacherNiklas = teachers[0];
-let teachersofia = teachers[1];
+let teacherSofia = teachers[1];
 
 let studentNiklas = studentlist[0];
 let studentJohan = studentlist[1];
@@ -340,6 +404,10 @@ let classMath = classes[0];
 let classArt = classes[1];
 let classFrontend = classes[2];
 
+/*
+addSubjectToTeacher("Math", "Niklas");
+addSubjectToTeacher("Math", "Niklas");
+*/
 teacherNiklas.addSubject("Frontend");
 classFrontend.addTeacher("Niklas");
 classFrontend.addTeacher("Sofia");
@@ -366,10 +434,20 @@ for (let i = 0; i < teachers.length; i++) {
 }
 
 fireTeacher("Niklas");
+relegateStudent("Johan");
+addStudentToStudents("Johan");
 addTeacherToTeachers("Niklas");
 school.addTeacher("Niklas");
+teacherNiklas = teachers[2];
+teacherNiklas.addSubject("Frontend");
+teacherSofia.addSubject("Frontend");
+teacherNiklas.addSubject("Gymnastics");
 classFrontend.addTeacher("Niklas");
 
 console.log(school);
 console.log(teachers);
 console.log(classes);
+
+displayAllStudents();
+displayAllTeachers();
+displayClass("Frontend");
