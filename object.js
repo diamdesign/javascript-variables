@@ -183,7 +183,7 @@ function removeSubject(subjectName) {
 
 function removeStudent(studentName) {
 	if (this.students) {
-		const index = this.students.findIndex((student) => student.name === studentName);
+		const index = this.students.findIndex((student) => student === studentName);
 		if (index !== -1) {
 			this.students.splice(index, 1);
 			console.log(`Student '${studentName}' removed from ${this.name}.`);
@@ -308,6 +308,22 @@ function fireTeacher(teacherName) {
 	}
 	school.removeTeacher(teacherName);
 	console.log(`Teacher '${teacherName}' is fired and removed from the school.`);
+}
+
+function relegateStudent(studentName) {
+	for (let i = 0; i < classes.length; i++) {
+		classes[i].removeStudent(studentName);
+	}
+	let student = studentlist.findIndex((studentlist) => studentlist.name === studentName);
+
+	if (student !== -1) {
+		studentlist.splice(student, 1);
+		console.log(`Student '${studentName}' is removed from Students.`);
+	} else {
+		console.log(`Student '${studentName}' was not found in Students.`);
+	}
+	school.removeStudent(studentName);
+	console.log(`Student '${studentName}' is relegated and removed from the school.`);
 }
 
 addSubjectToTeacher("Math", "Niklas");
