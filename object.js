@@ -72,6 +72,7 @@ let studentlist = [
 		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
+		addGrade: addGrade,
 	},
 	{
 		name: "Johan",
@@ -81,6 +82,7 @@ let studentlist = [
 		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
+		addGrade: addGrade,
 	},
 	{
 		name: "Fredrik",
@@ -90,6 +92,7 @@ let studentlist = [
 		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
+		addGrade: addGrade,
 	},
 	{
 		name: "Vincent",
@@ -99,6 +102,7 @@ let studentlist = [
 		grades: [],
 		addSubject: addSubject,
 		removeSubject: removeSubject,
+		addGrade: addGrade,
 	},
 	{
 		name: "Fränich",
@@ -107,6 +111,7 @@ let studentlist = [
 		subjects: [],
 		grades: [],
 		addSubject: addSubject,
+		addGrade: addGrade,
 	},
 ];
 
@@ -125,19 +130,8 @@ let teachers = [
 	},
 ];
 
-let grades = [
-	{
-		name: "Fredrik",
-		grades: [
-			{
-				class: "Math",
-				grade: "A",
-			},
-		],
-	},
-];
+let grades = [];
 
-// studentFredrik.addGrade("Math","A");
 /*
 teachers[0].subjects.push(classes[0].name);
 classes[2].students.push(studentlist[2].name);
@@ -183,6 +177,39 @@ function addSubject(subjectName) {
 		}
 	} else {
 		console.log("Student object does not have a 'subjects' property.");
+	}
+}
+
+function addGrade(subject, grade) {
+	// Find the student in studentlist
+	const student = studentlist.find((s) => s.name === this.name);
+
+	if (student) {
+		// Add grade to the student's grades array
+		student.grades.push({ class: subject, grade: grade });
+
+		// Find the student in grades list
+		const studentInGrades = grades.find((g) => g.name === this.name);
+
+		if (studentInGrades) {
+			// Update the grades array in grades list
+			const existingGradeIndex = studentInGrades.grades.findIndex((g) => g.class === subject);
+
+			if (existingGradeIndex !== -1) {
+				// Update the existing grade
+				studentInGrades.grades[existingGradeIndex].grade = grade;
+			} else {
+				// Add a new grade
+				studentInGrades.grades.push({ class: subject, grade: grade });
+			}
+		} else {
+			// If the student is not found in grades list, add a new entry
+			grades.push({ name: this.name, grades: [{ class: subject, grade: grade }] });
+		}
+
+		console.log(`Grade '${grade}' added for subject '${subject}' for ${this.name}.`);
+	} else {
+		console.log(`Student '${this.name}' not found.`);
 	}
 }
 
@@ -278,12 +305,12 @@ function addClassToClasses(className) {
 	}
 }
 
-function addStudentToStudents(studentName) {
+function addStudentToStudents(studentName, studentAge = "", studentGender = "") {
 	if (!studentlist.find((s) => s.name === studentName)) {
 		let newStudent = {
 			name: studentName,
-			age: "",
-			gender: "Male",
+			age: studentAge,
+			gender: studentGender,
 			subjects: [],
 			grades: [],
 			addSubject: addSubject,
@@ -297,12 +324,12 @@ function addStudentToStudents(studentName) {
 	}
 }
 
-function addTeacherToTeachers(teacherName) {
+function addTeacherToTeachers(teacherName, teacherAge = "", teacherGender = "") {
 	if (!teachers.find((t) => t.name === teacherName)) {
 		let newTeacher = {
 			name: teacherName,
-			age: "",
-			gender: "Male",
+			age: teacherAge,
+			gender: teacherGender,
 			subjects: [],
 			addSubject: addSubject,
 			removeSubject: removeSubject,
@@ -393,6 +420,37 @@ function displayClass(className) {
 	}
 }
 
+function displayStudentGrades(studentName) {
+	const student = studentlist.find((s) => s.name === studentName);
+
+	if (student) {
+		console.log(`Grades for ${studentName}:`);
+		student.grades.forEach((grade) => {
+			console.log(`  ${grade.class}: ${grade.grade}`);
+		});
+		console.log("----------------------");
+	} else {
+		console.log(`Student '${studentName}' not found.`);
+	}
+}
+
+function displayGrades(subject) {
+	const gradesForSubject = grades.filter((g) =>
+		g.grades.some((grade) => grade.class === subject)
+	);
+
+	if (gradesForSubject.length > 0) {
+		console.log(`Grades for ${subject}:`);
+		gradesForSubject.forEach((student) => {
+			const studentGrade = student.grades.find((grade) => grade.class === subject);
+			console.log(`  ${student.name}: ${studentGrade.grade}`);
+		});
+		console.log("----------------------");
+	} else {
+		console.log(`No grades found for subject '${subject}'.`);
+	}
+}
+
 let teacherNiklas = teachers[0];
 let teacherSofia = teachers[1];
 
@@ -444,10 +502,19 @@ teacherSofia.addSubject("Frontend");
 teacherNiklas.addSubject("Gymnastics");
 classFrontend.addTeacher("Niklas");
 
+studentFredrik.addGrade("Math", "B");
+studentFredrik.addGrade("Frontend", "A");
+studentNiklas.addGrade("Math", "C");
+studentNiklas.addGrade("Frontend", "A");
+
 console.log(school);
 console.log(teachers);
 console.log(classes);
 
 displayAllStudents();
 displayAllTeachers();
+
 displayClass("Frontend");
+
+displayStudentGrades("Fredrik");
+displayGrades("Math");
